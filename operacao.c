@@ -48,6 +48,9 @@ void parseGrafo(operacoes inputs, int input_size, Grafo *grafo_p) {
                 if( (inputs[i].op == 'W') && (inputs[j].op == 'W' ) )
                     insereAresta((*grafo_p), inputs[i].id-1, inputs[j].id-1);
 
+                //if ( (inputs[i].id == inputs[j].id) && inputs[j].op == 'C') {
+                //    break;
+                //}
             }
         }
     }

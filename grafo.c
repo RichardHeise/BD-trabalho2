@@ -71,6 +71,7 @@ int checkCiclo_aux(Grafo grafo_p, int* acessados, int atual) {
 	acessados[atual] = 0;
 	return 0;
 }
+
 int checkCiclo(Grafo grafo_p) {
 	int acessados[grafo_p->V];
 	int flag = 0;
