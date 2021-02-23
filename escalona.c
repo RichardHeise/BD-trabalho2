@@ -6,9 +6,11 @@
 int main() {
 
     operacoes inputs = NULL;
-    int inputs_size = readOps(&inputs);
-     
-    Grafo grafo = iniciaGrafo(inputs_size);
+    int ver = 0;
+    int inputs_size = readOps(&inputs, &ver);
+    
+    Grafo grafo = iniciaGrafo(ver);
+
     parseGrafo(inputs, inputs_size, &grafo);
 
     imprimeGrafo(grafo);

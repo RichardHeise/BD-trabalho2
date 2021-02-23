@@ -4,44 +4,50 @@
 
 #include "operacao.h"
 
-int readOps(operacoes *input) {
+int readOps(operacoes *input, int *v) {
     int max = 64;
     (*input) = (operacoes) malloc(sizeof(operacao)*max);
-    int n = 0;
+    int numInputs = 0;
 
-    while( scanf("%d %d %c %c\n",&(*input)[n].order,
-                                 &(*input)[n].id,
-                                 &(*input)[n].op,
-                                 &(*input)[n].val) == 4 ) {
+    while( scanf("%d %d %c %c\n",&(*input)[numInputs].order,
+                                 &(*input)[numInputs].id,
+                                 &(*input)[numInputs].op,
+                                 &(*input)[numInputs].val) == 4 ) {
 
-        n++;
+        numInputs++;
 
-        if(n >= max) {
+        if(numInputs >= max) {
             max+=10;
             (*input) = (operacoes) realloc((*input), sizeof(operacao)*max);
         }
     }
-    (*input) = (operacoes) realloc((*input), sizeof(operacao)*n);
 
-    return n;
+    for (int i = 0; i < numInputs; i++) {
+        if ((*input)[i].id > (*v)) {
+            (*v) = (*input)[i].id;
+        }
+    }
+
+    (*input) = (operacoes) realloc((*input), sizeof(operacao)*numInputs);
+
+    return numInputs;
 }
 
-void printEscalonamento(int *out, int n) {
-    for(int i = 0; i < n; i++)
-        printf("%d%c", out[i]+1, i+1 >= n ? ' ' : ',');
-}
+void parseGrafo(operacoes inputs, int input_size, Grafo *grafo_p) {
 
-void parseGrafo(operacoes inputs, int input_size, Grafo *graph_p) {
-
-    for(int i = 0; i < input_size; i++) { 
+    for(int i = 0; i < input_size; i++) {
         for(int j = i+1; j < input_size; j++) {
-            if( (inputs[i].id != inputs[j].id) && (inputs[i].val == inputs[j].val) ){
-                if( (inputs[i].op == 'W') && ( inputs[j].op == 'R' ) )
-                    insereAresta((*graph_p), i, j);
-                if( (inputs[i].op == 'R') && ( inputs[j].op == 'W' ) )
-                    insereAresta((*graph_p), i, j); 
-                if( (inputs[i].op == 'W') && ( inputs[j].op == 'W' ) )
-                    insereAresta((*graph_p), i, j); 
+            if( (inputs[i].id != inputs[j].id) && (inputs[i].val == inputs[j].val) ) {
+
+                if( (inputs[i].op == 'W') && (inputs[j].op == 'R' ) )
+                    insereAresta((*grafo_p), inputs[i].id-1, inputs[j].id-1);
+
+                if( (inputs[i].op == 'R') && (inputs[j].op == 'W' ) )
+                    insereAresta((*grafo_p), inputs[i].id-1, inputs[j].id-1);
+
+                if( (inputs[i].op == 'W') && (inputs[j].op == 'W' ) )
+                    insereAresta((*grafo_p), inputs[i].id-1, inputs[j].id-1);
+
             }
         }
     }

@@ -9,8 +9,6 @@ typedef struct {
 
 typedef operacao * operacoes;
 
-int readOps(operacoes *input);
-
-void printEscalonamento(int *out, int n);
+int readOps(operacoes *input, int *v);
 
 void parseGrafo(operacoes inputs, int input_size, Grafo *graph_p);
