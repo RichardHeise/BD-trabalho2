@@ -7,16 +7,17 @@
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função MATRIXint() aloca uma matriz com linhas 0..r-1 e colunas 0..c-1. Cada elemento da matriz recebe valor val. */
 static int **alocaMatriz( int lin, int col, int val) { 
-   int **mat = malloc( lin * sizeof (int *));
 
-   for (vertice i = 0; i < lin; ++i) 
-      mat[i] = malloc( col * sizeof (int));
+   	int **mat = malloc( lin * sizeof (int *));
 
-   for (vertice i = 0; i < lin; ++i)
-      for (vertice j = 0; j < col; ++j)
-         mat[i][j] = val;
+   	for (vertice i = 0; i < lin; ++i) 
+    	mat[i] = malloc( col * sizeof (int));
 
-   return mat;
+   	for (vertice i = 0; i < lin; ++i)
+   	   	for (vertice j = 0; j < col; ++j)
+   	    	mat[i][j] = val;
+
+   	return mat;
 }
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função Grafoinit() constrói um grafo com vértices 0 1 .. V-1 e nenhum arco. */
 Grafo iniciaGrafo( int vertices) { 

@@ -7,6 +7,18 @@ typedef struct {
     char val;
 } operacao;
 
+typedef struct {
+    int *id_trans;
+    int num_trans;
+    operacao *operacoes;
+    int num_opr;
+} escalonamento;
+
+typedef struct {
+    escalonamento *lista;
+    int tam;
+} lista_esc;
+
 typedef operacao * operacoes;
 
 int readOps(operacoes *input, int *v);
