@@ -23,4 +23,6 @@ typedef operacao * operacoes;
 
 int readOps(operacoes *input, int *v);
 
-void parseGrafo(operacoes inputs, int input_size, Grafo *graph_p);
+int testaSeriabilidade(operacoes inputs, int input_size, Grafo *graph_p);
+
+lista_esc separaInput(operacao *in, int tam);

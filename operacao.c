@@ -33,7 +33,7 @@ int readOps(operacoes *input, int *v) {
     return numInputs;
 }
 
-void parseGrafo(operacoes inputs, int input_size, Grafo *grafo_p) {
+int testaSeriabilidade(operacoes inputs, int input_size, Grafo *grafo_p) {
 
     for(int i = 0; i < input_size; i++) {
         for(int j = i+1; j < input_size; j++) {
@@ -52,31 +52,51 @@ void parseGrafo(operacoes inputs, int input_size, Grafo *grafo_p) {
             }
         }
     }
+
+    return !checkCiclo(*grafo_p);
+
+
 }
 
-lista_esc separaInput(operacoes *in, int tam) {
+int *converteVetor(int *vetor, int tam, int num) {
+
+    int *aux, k;
+
+    aux = (int *)malloc(num*(sizeof(int)));
+
+    k = 0;
+    for (int i = 1; i <= tam; i++) {
+        if (vetor[i] == 1) {
+            aux[k] = i;
+            k++;
+        }
+    }
+    return aux;
+}
+
+lista_esc separaInput(operacao *in, int tam) {
 
     int *vetor;
 
     int abertos = 0;
     vetor = malloc(tam * sizeof(int));
 
-    int i, j, aux, *vetor_aux;
-
+    int aux, *vetor_aux;
 
     for (int i = 0; i < tam; i++) {
         vetor[i] = 0;
     }
-    
+
     lista_esc escal;
 
     escal.lista = malloc(tam * sizeof(lista_esc));
     escal.tam = 0;
 
-    j = 0;
+    int i = 0;
+    int j = 0;
     vetor_aux = malloc(tam * sizeof(int));
 
-    for (int i = 0; i < tam; i++) {
+    while (i < tam) {
 
         escal.lista[j].num_trans = 0;
         escal.lista[j].num_opr = 0;
@@ -85,10 +105,11 @@ lista_esc separaInput(operacoes *in, int tam) {
         escal.tam += 1;
 
         for (int v = 0; v < tam; v++) {
-            vetor_aux = 0;
+            vetor_aux[v] = 0;
         }
 
         do {
+
             escal.lista[j].operacoes[escal.lista[j].num_opr] = in[i];
             escal.lista[j].num_opr++;
 
@@ -101,25 +122,26 @@ lista_esc separaInput(operacoes *in, int tam) {
 
             if ( (vetor[in[i].id] == 1) && (in[i].op == 'C')) {
                 vetor[in[i].id] = 0;
-                abertos++;
+                abertos--;
             }
+
             i++;
 
-        } while ((abertos != =) && (i < tam));
+        } while ((abertos != 0) && (i < tam));
 
         escal.lista[j].id_trans = converteVetor(vetor_aux, tam, escal.lista[j].num_opr);
 
         j++;
 
         aux=0;
-        for (int w=0; w < tam; w++) {
+        for (int w = 0; w < tam; w++) {
             aux += vetor[w];
         }
         
         if ( aux != 0) {
             perror("Transação não commitada");
         }
-
     }
+
     return escal;
 }
