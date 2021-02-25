@@ -1,5 +1,6 @@
 /* Vértices de grafos são representados por objetos do tipo vertice. */
 #define vertice int
+#define NOT_COMMITED -1
 
 #include <iostream>
 #include <vector>

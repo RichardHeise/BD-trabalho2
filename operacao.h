@@ -15,10 +15,10 @@ typedef struct {
     int num_opr;
 } escalonamento;
 
-typedef operacao * operacoes;
+typedef vector<operacao> operacoes;
 
-int readOps(operacoes *input, int *v);
+int readOps(operacoes inputs, int *v);
 
-int testaSeriabilidade(vector<operacao> inputs, int input_size, Grafo *graph_p);
+int testaSeriabilidade(operacoes inputs, int input_size, Grafo *graph_p);
 
-vector<escalonamento> separaInput(operacao *in, int tam);
+vector<escalonamento> separaInput(operacoes in, int tam);

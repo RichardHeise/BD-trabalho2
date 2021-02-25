@@ -5,40 +5,30 @@ using namespace std;
 
 #include "operacao.h"
 
-int readOps(operacoes *input, int *v) {
-    int max = 64;
-    (*input) = (operacoes) malloc(sizeof(operacao)*max);
+int readOps(operacoes inputs, int *v) {
+
     int numInputs = 0;
-
-    while( scanf("%d %d %c %c\n",&(*input)[numInputs].order,
-                                 &(*input)[numInputs].id,
-                                 &(*input)[numInputs].op,
-                                 &(*input)[numInputs].val) == 4 ) {
-
+    while( scanf("%d %d %c %c\n",&inputs[numInputs].order,
+                                 &inputs[numInputs].id,
+                                 &inputs[numInputs].op,
+                                 &inputs[numInputs].val) == 4 ) {
         numInputs++;
-
-        if(numInputs >= max) {
-            max+=10;
-            (*input) = (operacoes) realloc((*input), sizeof(operacao)*max);
-        }
     }
+
 
     for (int i = 0; i < numInputs; i++) {
-        if ((*input)[i].id > (*v)) {
-            (*v) = (*input)[i].id;
+        if (inputs[i].id > (*v)) {
+            (*v) = inputs[i].id;
         }
     }
-
-    (*input) = (operacoes) realloc((*input), sizeof(operacao)*numInputs);
 
     return numInputs;
 }
 
-int testaSeriabilidade(vector<operacao> inputs, int input_size, Grafo *grafo_p) {
+int testaSeriabilidade(operacoes inputs, int input_size, Grafo *grafo_p) {
 
     for(int i = 0; i < input_size; i++) {
         for(int j = i+1; j < input_size; j++) {
-
             if( (inputs[i].id != inputs[j].id) && (inputs[i].val == inputs[j].val) ) {
 
                 if( (inputs[i].op == 'W') && (inputs[j].op == 'R' ) )
@@ -51,12 +41,11 @@ int testaSeriabilidade(vector<operacao> inputs, int input_size, Grafo *grafo_p) 
                     insereAresta((*grafo_p), inputs[i].id-1, inputs[j].id-1);
 
             }
+            
         }
     }
 
     return !checkCiclo(*grafo_p);
-
-
 }
 
 static vector<int> converteVetor(vector<int> vetor, int tam, int num) {
@@ -64,18 +53,19 @@ static vector<int> converteVetor(vector<int> vetor, int tam, int num) {
     int k;
 
     vector<int> aux(tam, 0);
-
+    
     k = 0;
-    for (int i = 1; i <= tam; i++) {
+    for (int i = 1; i < tam; i++) {
         if (vetor[i] == 1) {
             aux[k] = i;
             k++;
         }
     }
+    
     return aux;
 }
 
-vector<escalonamento> separaInput(operacao *in, int tam) {
+vector<escalonamento> separaInput(operacoes in, int tam) {
 
     vector<bool> vetor(tam, 0);
     vector<int> vetor_aux(tam, 0);
@@ -122,6 +112,7 @@ vector<escalonamento> separaInput(operacao *in, int tam) {
         bloco.push_back(*temp);
             
         bloco[j].id_trans = converteVetor(vetor_aux, tam, bloco[j].num_opr);
+
         j++;
 
         for (int w = 0; w < tam; w++) {
@@ -130,6 +121,7 @@ vector<escalonamento> separaInput(operacao *in, int tam) {
         
         if ( aux != 0) {
             perror("Transação não commitada");
+            exit(NOT_COMMITED);
         }
     }
 

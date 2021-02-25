@@ -6,33 +6,33 @@ using namespace std;
 
 int main() {
 
-    operacoes inputs = NULL;
+    operacoes inputs;
 
     int ver = 0;
-    int inputs_size = readOps(&inputs, &ver);
+    int inputs_size = readOps(inputs, &ver);
     
     Grafo grafo = iniciaGrafo(ver);
 
     vector<escalonamento> escalonamentos;
 
     escalonamentos = separaInput(inputs, inputs_size);
-    /*
+    
     //começo de debbuger
     printf("estrutura de dados:\n");
-    printf("ListaEscalonamentos(tamanho = %d):\n", escalonamentos.tam);
+    printf("ListaEscalonamentos(tamanho = %lud):\n", escalonamentos.size());
     
-    for (int i = 0 ; i < escalonamentos.tam; i++) {
-        printf("Escalonamento %d possui %d transacoes: ", i+1, escalonamentos.lista[i].num_trans);
-        for (int j = 0; j < escalonamentos.lista[i].num_trans; j++)
-            printf("%d, ", escalonamentos.lista[i].id_trans[j]);
+    for (int i = 0 ; i < escalonamentos.size(); i++) {
+        printf("Escalonamento %d possui %d transacoes: ", i+1, escalonamentos[i].num_trans);
+        for (int j = 0; j < escalonamentos[i].num_trans; j++)
+            printf("%d, ", escalonamentos[i].id_trans[j]);
 
 
-        printf("Com %d operacoes:\n", escalonamentos.lista[i].num_opr);
-        for (int j = 0; j < escalonamentos.lista[i].num_opr; j++)
-            printf("%d %d %c %c\n", i+1, escalonamentos.lista[i].operacoes[j].id,
-            escalonamentos.lista[i].operacoes[j].op, escalonamentos.lista[i].operacoes[j].val);
+        printf("Com %d operacoes:\n", escalonamentos[i].num_opr);
+        for (int j = 0; j < escalonamentos[i].num_opr; j++)
+            printf("%d %d %c %c\n", i+1, escalonamentos[i].operacoes[j].id,
+            escalonamentos[i].operacoes[j].op, escalonamentos[i].operacoes[j].val);
 
-    }*/
+    }
     //fim do debugger
 
     for (int i = 0; i < escalonamentos.size(); i++) {
