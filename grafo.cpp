@@ -53,7 +53,7 @@ bool checkCiclo_aux(grafo* grafo_p, vector<bool> acessados, int atual) {
 	return false;
 }
 /* detecta ciclo no grafo */
-int checkCiclo(grafo* grafo_p) {
+int checkCiclo(Grafo grafo_p) {
 	vector<bool> acessados(grafo_p->V, 0);
 	bool flag = false;
 

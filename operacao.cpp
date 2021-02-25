@@ -34,7 +34,7 @@ int readOps(operacoes *input, int *v) {
     return numInputs;
 }
 
-int testaSeriabilidade(operacoes inputs, int input_size, Grafo *grafo_p) {
+int testaSeriabilidade(vector<operacao> inputs, int input_size, Grafo *grafo_p) {
 
     for(int i = 0; i < input_size; i++) {
         for(int j = i+1; j < input_size; j++) {
@@ -75,48 +75,55 @@ static vector<int> converteVetor(vector<int> vetor, int tam, int num) {
     return aux;
 }
 
-lista_esc separaInput(operacao *in, int tam) {
+vector<escalonamento> separaInput(operacao *in, int tam) {
 
     vector<bool> vetor(tam, 0);
     vector<int> vetor_aux(tam, 0);
-    lista_esc *escal = new lista_esc;
-    int abertos;
-    int aux;
+
+    vector<escalonamento> bloco; 
+    escalonamento * temp = new escalonamento;
+
+    int aux = 0;
+    int abertos = 0;
     int i = 0;
     int j = 0;
 
     while (i < tam) {
+        
+        temp.num_opr = 0;
+        temp.num_trans = 0;
+        
 
         for (int v = 0; v < tam; v++) {
             vetor_aux[v] = 0;
         }
-
+        
         do {
-
-            escal->lista[j].operacoes[escal->lista[j].num_opr] = in[i];
-            escal->lista[j].num_opr++;
-
+            
+            temp.operacoes[temp.num_opr] = in[i];
+            temp.num_opr++;
+            
             if ( (vetor[in[i].id] != 1) && (in[i].op != 'C') ) {
                 vetor[in[i].id] = 1;
                 abertos++;
                 vetor_aux[in[i].id] = 1;
-                escal->lista[j].num_trans++;
+                temp.num_trans++;
             }
 
             if ( (vetor[in[i].id] == 1) && (in[i].op == 'C')) {
                 vetor[in[i].id] = 0;
                 abertos--;
             }
-
+            
             i++;
 
         } while ((abertos != 0) && (i < tam));
 
-        escal->lista[j].id_trans = converteVetor(vetor_aux, tam, escal->lista[j].num_opr);
-
+        bloco.push_back(*temp);
+            
+        //bloco[j].id_trans = converteVetor(vetor_aux, tam, bloco[j].num_opr);
         j++;
 
-        aux=0;
         for (int w = 0; w < tam; w++) {
             aux += vetor[w];
         }
@@ -125,6 +132,5 @@ lista_esc separaInput(operacao *in, int tam) {
             perror("Transação não commitada");
         }
     }
-
-    return *escal;
+    return bloco;
 }

@@ -22,4 +22,4 @@ void imprimeGrafo( Grafo grafo_p);
 
 bool checkCiclo_aux(grafo* grafo_p, std::vector<bool> acessados, int atual);
 
-int checkCiclo(Grafo *grafo_p);
+int checkCiclo(Grafo grafo_p);

@@ -1,4 +1,5 @@
 #include "grafo.h"
+using namespace std;
 
 typedef struct {
     int order;
@@ -14,14 +15,10 @@ typedef struct {
     int num_opr;
 } escalonamento;
 
-typedef struct {
-    vector<escalonamento> lista;
-} lista_esc;
-
 typedef operacao * operacoes;
 
 int readOps(operacoes *input, int *v);
 
-int testaSeriabilidade(operacoes inputs, int input_size, Grafo *graph_p);
+int testaSeriabilidade(vector<operacao> inputs, int input_size, Grafo *graph_p);
 
-lista_esc separaInput(operacao *in, int tam);
+vector<escalonamento> separaInput(operacao *in, int tam);

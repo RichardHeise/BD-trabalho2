@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+using namespace std;
 
 #include "operacao.h"
 
@@ -12,34 +13,35 @@ int main() {
     
     Grafo grafo = iniciaGrafo(ver);
 
-    lista_esc e;
-    e = separaInput(inputs, inputs_size);
+    vector<escalonamento> escalonamentos;
+
+    escalonamentos = separaInput(inputs, inputs_size);
     /*
     //começo de debbuger
     printf("estrutura de dados:\n");
-    printf("ListaEscalonamentos(tamanho = %d):\n", e.tam);
+    printf("ListaEscalonamentos(tamanho = %d):\n", escalonamentos.tam);
     
-    for (int i = 0 ; i < e.tam; i++) {
-        printf("Escalonamento %d possui %d transacoes: ", i+1, e.lista[i].num_trans);
-        for (int j = 0; j < e.lista[i].num_trans; j++)
-            printf("%d, ", e.lista[i].id_trans[j]);
+    for (int i = 0 ; i < escalonamentos.tam; i++) {
+        printf("Escalonamento %d possui %d transacoes: ", i+1, escalonamentos.lista[i].num_trans);
+        for (int j = 0; j < escalonamentos.lista[i].num_trans; j++)
+            printf("%d, ", escalonamentos.lista[i].id_trans[j]);
 
 
-        printf("Com %d operacoes:\n", e.lista[i].num_opr);
-        for (int j = 0; j < e.lista[i].num_opr; j++)
-            printf("%d %d %c %c\n", i+1, e.lista[i].operacoes[j].id,
-            e.lista[i].operacoes[j].op, e.lista[i].operacoes[j].val);
+        printf("Com %d operacoes:\n", escalonamentos.lista[i].num_opr);
+        for (int j = 0; j < escalonamentos.lista[i].num_opr; j++)
+            printf("%d %d %c %c\n", i+1, escalonamentos.lista[i].operacoes[j].id,
+            escalonamentos.lista[i].operacoes[j].op, escalonamentos.lista[i].operacoes[j].val);
 
     }*/
     //fim do debugger
 
-    for (int i = 0; i < e.tam; i++) {
-        int eh_serial = testaSeriabilidade(e.lista[i].operacoes, inputs_size, &grafo);
+    for (int i = 0; i < escalonamentos.size(); i++) {
+        int eh_serial = testaSeriabilidade(escalonamentos[i].operacoes, inputs_size, &grafo);
 
         printf("%d ", i+1);
 
-        for (int j = 0; j < e.lista[i].num_trans; j++) {
-            printf("%d%c", e.lista[i].id_trans[j], j+1 >= e.lista[i].num_trans ? ' ' : ',');
+        for (int j = 0; j < escalonamentos[i].num_trans; j++) {
+            printf("%d%c", escalonamentos[i].id_trans[j], j+1 >= escalonamentos[i].num_trans ? ' ' : ',');
         }
 
         if ( eh_serial ) {
