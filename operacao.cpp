@@ -90,8 +90,8 @@ vector<escalonamento> separaInput(operacao *in, int tam) {
 
     while (i < tam) {
         
-        temp.num_opr = 0;
-        temp.num_trans = 0;
+        temp->num_opr = 0;
+        temp->num_trans = 0;
         
 
         for (int v = 0; v < tam; v++) {
@@ -100,14 +100,14 @@ vector<escalonamento> separaInput(operacao *in, int tam) {
         
         do {
             
-            temp.operacoes[temp.num_opr] = in[i];
-            temp.num_opr++;
+            temp->operacoes.push_back(in[i]);
+            temp->num_opr++;
             
             if ( (vetor[in[i].id] != 1) && (in[i].op != 'C') ) {
                 vetor[in[i].id] = 1;
                 abertos++;
                 vetor_aux[in[i].id] = 1;
-                temp.num_trans++;
+                temp->num_trans++;
             }
 
             if ( (vetor[in[i].id] == 1) && (in[i].op == 'C')) {
@@ -121,7 +121,7 @@ vector<escalonamento> separaInput(operacao *in, int tam) {
 
         bloco.push_back(*temp);
             
-        //bloco[j].id_trans = converteVetor(vetor_aux, tam, bloco[j].num_opr);
+        bloco[j].id_trans = converteVetor(vetor_aux, tam, bloco[j].num_opr);
         j++;
 
         for (int w = 0; w < tam; w++) {
@@ -132,5 +132,6 @@ vector<escalonamento> separaInput(operacao *in, int tam) {
             perror("Transação não commitada");
         }
     }
+
     return bloco;
 }
