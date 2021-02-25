@@ -1,6 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+using namespace std;
 
 #include "operacao.h"
 
@@ -58,11 +59,11 @@ int testaSeriabilidade(operacoes inputs, int input_size, Grafo *grafo_p) {
 
 }
 
-int *converteVetor(int *vetor, int tam, int num) {
+static vector<int> converteVetor(vector<int> vetor, int tam, int num) {
 
-    int *aux, k;
+    int k;
 
-    aux = (int *)malloc(num*(sizeof(int)));
+    vector<int> aux(tam, 0);
 
     k = 0;
     for (int i = 1; i <= tam; i++) {
@@ -76,33 +77,15 @@ int *converteVetor(int *vetor, int tam, int num) {
 
 lista_esc separaInput(operacao *in, int tam) {
 
-    int *vetor;
-
-    int abertos = 0;
-    vetor = malloc(tam * sizeof(int));
-
-    int aux, *vetor_aux;
-
-    for (int i = 0; i < tam; i++) {
-        vetor[i] = 0;
-    }
-
-    lista_esc escal;
-
-    escal.lista = malloc(tam * sizeof(lista_esc));
-    escal.tam = 0;
-
+    vector<bool> vetor(tam, 0);
+    vector<int> vetor_aux(tam, 0);
+    lista_esc *escal = new lista_esc;
+    int abertos;
+    int aux;
     int i = 0;
     int j = 0;
-    vetor_aux = malloc(tam * sizeof(int));
 
     while (i < tam) {
-
-        escal.lista[j].num_trans = 0;
-        escal.lista[j].num_opr = 0;
-        escal.lista[j].operacoes = malloc(tam * sizeof(lista_esc));
-
-        escal.tam += 1;
 
         for (int v = 0; v < tam; v++) {
             vetor_aux[v] = 0;
@@ -110,14 +93,14 @@ lista_esc separaInput(operacao *in, int tam) {
 
         do {
 
-            escal.lista[j].operacoes[escal.lista[j].num_opr] = in[i];
-            escal.lista[j].num_opr++;
+            escal->lista[j].operacoes[escal->lista[j].num_opr] = in[i];
+            escal->lista[j].num_opr++;
 
             if ( (vetor[in[i].id] != 1) && (in[i].op != 'C') ) {
                 vetor[in[i].id] = 1;
                 abertos++;
                 vetor_aux[in[i].id] = 1;
-                escal.lista[j].num_trans++;
+                escal->lista[j].num_trans++;
             }
 
             if ( (vetor[in[i].id] == 1) && (in[i].op == 'C')) {
@@ -129,7 +112,7 @@ lista_esc separaInput(operacao *in, int tam) {
 
         } while ((abertos != 0) && (i < tam));
 
-        escal.lista[j].id_trans = converteVetor(vetor_aux, tam, escal.lista[j].num_opr);
+        escal->lista[j].id_trans = converteVetor(vetor_aux, tam, escal->lista[j].num_opr);
 
         j++;
 
@@ -143,5 +126,5 @@ lista_esc separaInput(operacao *in, int tam) {
         }
     }
 
-    return escal;
+    return *escal;
 }

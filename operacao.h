@@ -8,15 +8,14 @@ typedef struct {
 } operacao;
 
 typedef struct {
-    int *id_trans;
+    vector<int> id_trans;
     int num_trans;
-    operacao *operacoes;
+    vector<operacao> operacoes;
     int num_opr;
 } escalonamento;
 
 typedef struct {
-    escalonamento *lista;
-    int tam;
+    vector<escalonamento> lista;
 } lista_esc;
 
 typedef operacao * operacoes;
