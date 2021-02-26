@@ -6,24 +6,25 @@ using namespace std;
 // Implementação com base em: https://www.ime.usp.br/~pf/algoritmos_para_grafos/aulas/graphdatastructs.html
 
 
-grafo* iniciaGrafo(int V) { 
-	grafo* grafo_p = new grafo;
+Grafo iniciaGrafo(int V) { 
+	Grafo grafo_p = new grafo;
 	grafo_p->V = V;
+	grafo_p->A = 0;
 	vector<int> linha(V, 0);
 	for (int i = 0; i < V; ++i)
 		grafo_p->matrix.push_back(linha);
 	return grafo_p;
 }
 
-void insereAresta(grafo* grafo_p, int origem, int destino) {
+void insereAresta(Grafo grafo_p, int origem, int destino) {
 	grafo_p->matrix[origem][destino] = 1;
 }
 
-void removeAresta(grafo* grafo_p, int origem, int destino) {
+void removeAresta(Grafo grafo_p, int origem, int destino) {
 	grafo_p->matrix[origem][destino] = 0;
 }
 
-void imprimeGrafo(grafo* grafo_p) {
+void imprimeGrafo(Grafo grafo_p) {
 	for (int i = 0; i < grafo_p->V; ++i) {
 		cout << i << ": ";
 		for (int j = 0; j < grafo_p->V; ++j)
@@ -34,7 +35,7 @@ void imprimeGrafo(grafo* grafo_p) {
 }
 
 /* utilidade para a função de detecção de ciclo */
-bool checkCiclo_aux(grafo* grafo_p, vector<bool> acessados, int atual) {
+bool checkCiclo_aux(Grafo grafo_p, vector<bool> acessados, int atual) {
 	if (acessados[atual])
 		return true;
 

@@ -17,8 +17,10 @@ typedef struct {
 
 typedef vector<operacao> operacoes;
 
-int readOps(operacoes inputs, int *v);
+operacoes readOps(int *v);
 
-int testaSeriabilidade(operacoes inputs, int input_size, Grafo *graph_p);
+int testaSeriabilidade(operacoes inputs, int ver);
 
 vector<escalonamento> separaInput(operacoes in, int tam);
+
+int testaEquivalencia(operacoes inputs);

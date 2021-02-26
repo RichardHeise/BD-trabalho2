@@ -9,14 +9,14 @@ int main() {
     operacoes inputs;
 
     int ver = 0;
-    int inputs_size = readOps(inputs, &ver);
-    
-    Grafo grafo = iniciaGrafo(ver);
+
+    inputs = readOps(&ver);
 
     vector<escalonamento> escalonamentos;
 
-    escalonamentos = separaInput(inputs, inputs_size);
-    
+    escalonamentos = separaInput(inputs, inputs.size());
+
+    /*
     //começo de debbuger
     printf("estrutura de dados:\n");
     printf("ListaEscalonamentos(tamanho = %lud):\n", escalonamentos.size());
@@ -34,10 +34,12 @@ int main() {
 
     }
     //fim do debugger
+    */
+    for (int i = 0; i < escalonamentos.size(); ++i) {
 
-    for (int i = 0; i < escalonamentos.size(); i++) {
-        int eh_serial = testaSeriabilidade(escalonamentos[i].operacoes, inputs_size, &grafo);
-
+        int eh_serial = testaSeriabilidade(escalonamentos[i].operacoes, ver);
+        int eh_equivalente = testaEquivalencia(escalonamentos[i].operacoes);
+        /*
         printf("%d ", i+1);
 
         for (int j = 0; j < escalonamentos[i].num_trans; j++) {
@@ -50,12 +52,16 @@ int main() {
             printf("NS ");
         }
 
+        if ( eh_equivalente ) {
+            printf("SV");
+        } else {
+            printf("NV");
+        }
+        
         printf("\n");
 
-        grafo = iniciaGrafo(ver);
-
+    */
     }
-
-
+    
     return 0;
 }
