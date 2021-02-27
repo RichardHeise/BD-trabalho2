@@ -204,8 +204,9 @@ map<pair<pair<int,int>,char>,pair<int,int>> achaDemaisEscritas(operacoes inputs)
                 }
                 j--;
             }
+
             if (temp.find(chave) == temp.end())
-                    temp.insert(make_pair(chave, make_pair(0, 0)));
+                temp.insert(make_pair(chave, make_pair(0, 0)));
         }
     }
     return temp;
@@ -221,17 +222,14 @@ int testaEquivalencia(operacoes inputs) {
     
     map<pair<pair<int,int>,char>,pair<int,int>> demais_escritas;
     demais_escritas = achaDemaisEscritas(inputs);
-
-    //map<pair<pair<int,int>,char>,pair<int,int>>::iterator it = demais_escritas.begin();
-    //cout << "    First: ((" << it->first.first.first << ", " 
-    //<< it->first.    first.second << "), " << it->first.second 
-    //<< "), (" << it->second.first << "    , " << it->second.second << ") " << endl;
-    //it = demais_escritas.end();
     
     unsigned long long fatorial = fat(ids.size());
     
-    int equivalente = 1;
+    int equivalente;
+
     for(int i = 0; i < fatorial; i++) {
+
+        equivalente = 1;
         operacoes visao;
         for(int j = 0; j < ids.size(); j++) {
             for(int k = 0; k < inputs.size(); k++) {
@@ -242,6 +240,7 @@ int testaEquivalencia(operacoes inputs) {
         }
 
         map<char, int> escrita_final_visao = achaEscritaFinal(visao);
+
         for(map<char, int>::iterator it = escrita_final.begin(); it != escrita_final.end(); it++) {
             map<char, int>::iterator it_operacoes = escrita_final_visao.find(it->first);
 
@@ -250,23 +249,20 @@ int testaEquivalencia(operacoes inputs) {
             }
         }
 
-        if (!equivalente) {
-            break;
-        }
-        /* TODO
         map<pair<pair<int,int>,char>,pair<int,int>> demais_escritas_visao = achaDemaisEscritas(visao);
-        for(map<char, int>::iterator it = demais_escritas.begin(); it != demais_escritas.end(); it++) {
-            map<char, int>::iterator it_operacoes = demais_escritas_visao.find(it->first.first.first);
+        
+        for(map<pair<pair<int,int>,char>,pair<int,int>>::iterator it = demais_escritas.begin(); it != demais_escritas.end(); it++) {
+            map<pair<pair<int,int>,char>,pair<int,int>>::iterator it_operacoes = demais_escritas_visao.find(it->first);
 
             if ((it->first != it_operacoes->first) || (it->second != it_operacoes->second)) {
                 equivalente = 0;
             }
         }
 
-        if (!equivalente) {
-            break;
+        if (equivalente) {
+            return equivalente;
         }
-        */
+
         next_permutation(ids.begin(), ids.end());
     }
     
