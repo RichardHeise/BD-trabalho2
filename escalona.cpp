@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <algorithm>
 using namespace std;
 
 #include "operacao.h"
@@ -39,7 +40,7 @@ int main() {
 
         int eh_serial = testaSeriabilidade(escalonamentos[i].operacoes, ver);
         int eh_equivalente = testaEquivalencia(escalonamentos[i].operacoes);
-        /*
+        
         printf("%d ", i+1);
 
         for (int j = 0; j < escalonamentos[i].num_trans; j++) {
@@ -60,7 +61,7 @@ int main() {
         
         printf("\n");
 
-    */
+    
     }
     
     return 0;

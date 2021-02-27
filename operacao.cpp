@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <algorithm>
+#include <map>
 using namespace std;
 
 #include "operacao.h"
@@ -80,7 +81,8 @@ static vector<int> converteVetor(vector<int> vetor, int tam, int num) {
             k++;
         }
     }
-    
+    aux.resize(k);
+    sort(aux.begin(), aux.end());    
     return aux;
 }
 
@@ -156,23 +158,6 @@ static unsigned long long fat(int val) {
     return fatorial;
 }
 
-static vector<int> removeDuplicatas(vector<int> vetor)  { 
-    if (vetor.size() == 0 || vetor.size() == 1) {
-        return vetor; 
-    }
-  
-    vector<int> temp(vetor.size()); 
-    
-    for(int i = 0; vetor.size(); i++) {
-        
-    }
-
-    for(int i = 0; i < temp.size(); i++) {
-        printf("%d\n", temp[i]);
-    }
-    return temp; 
-} 
-
 static vector<int> getIds(operacoes inputs) {
 
     vector<int> temp(inputs.size());
@@ -181,6 +166,48 @@ static vector<int> getIds(operacoes inputs) {
         temp[i] = inputs[i].id;
     }
 
+    sort(temp.begin(), temp.end());
+
+    vector<int>::iterator it;
+    it = unique(temp.begin(), temp.end());
+    temp.resize(distance(temp.begin(), it));
+
+    return temp;
+}
+
+map<char, int> achaEscritaFinal(operacoes inputs) {
+    map<char, int> temp;
+
+    for (int i = inputs.size()-1; i >= 0; i--) {
+        if ((inputs[i].op == 'W') && (!temp.count(inputs[i].val))) {
+            temp.insert(make_pair(inputs[i].val, inputs[i].id));
+        }
+    }
+
+    return temp;
+}
+
+map<pair<pair<int,int>,char>,pair<int,int>> achaDemaisEscritas(operacoes inputs) {
+    map<pair<pair<int,int>,char>,pair<int,int>> temp;
+
+    for(int i = inputs.size()-1; i >= 0; i--) {
+        if ((inputs[i].op == 'R') ) {
+            pair<pair<int,int>,char> chave;
+
+            chave = make_pair(make_pair(inputs[i].order, inputs[i].id), inputs[i].val);
+            int j = i - 1;
+
+            while ( j >= 0 ) {
+                if ( (inputs[i].val == inputs[j].val) && 
+                     (inputs[j].op == 'W') ) {
+                        temp.insert(make_pair(chave, make_pair(inputs[j].id, inputs[j].order)));
+                }
+                j--;
+            }
+            if (temp.find(chave) == temp.end())
+                    temp.insert(make_pair(chave, make_pair(0, 0)));
+        }
+    }
     return temp;
 }
 
@@ -188,30 +215,60 @@ int testaEquivalencia(operacoes inputs) {
 
     vector<int> ids(inputs.size());
     ids = getIds(inputs);
+    
+    map<char, int> escrita_final;
+    escrita_final = achaEscritaFinal(inputs);
+    
+    map<pair<pair<int,int>,char>,pair<int,int>> demais_escritas;
+    demais_escritas = achaDemaisEscritas(inputs);
 
-    int equivalente;
-
+    //map<pair<pair<int,int>,char>,pair<int,int>>::iterator it = demais_escritas.begin();
+    //cout << "    First: ((" << it->first.first.first << ", " 
+    //<< it->first.    first.second << "), " << it->first.second 
+    //<< "), (" << it->second.first << "    , " << it->second.second << ") " << endl;
+    //it = demais_escritas.end();
+    
     unsigned long long fatorial = fat(ids.size());
-    ids = removeDuplicatas(ids);
-
-    /*
+    
+    int equivalente = 1;
     for(int i = 0; i < fatorial; i++) {
         operacoes visao;
         for(int j = 0; j < ids.size(); j++) {
             for(int k = 0; k < inputs.size(); k++) {
                 if (inputs[k].id == ids[j]) {
                     visao.push_back(inputs[k]);
-                    printf("%d ", visao[k].id);
                 }
             }
         }
 
-        for(int j = 0; j < ids.size(); j++) {
-            
+        map<char, int> escrita_final_visao = achaEscritaFinal(visao);
+        for(map<char, int>::iterator it = escrita_final.begin(); it != escrita_final.end(); it++) {
+            map<char, int>::iterator it_operacoes = escrita_final_visao.find(it->first);
+
+            if ((it->first != it_operacoes->first) || (it->second != it_operacoes->second)) {
+                equivalente = 0;
+            }
         }
 
+        if (!equivalente) {
+            break;
+        }
+        /* TODO
+        map<pair<pair<int,int>,char>,pair<int,int>> demais_escritas_visao = achaDemaisEscritas(visao);
+        for(map<char, int>::iterator it = demais_escritas.begin(); it != demais_escritas.end(); it++) {
+            map<char, int>::iterator it_operacoes = demais_escritas_visao.find(it->first.first.first);
+
+            if ((it->first != it_operacoes->first) || (it->second != it_operacoes->second)) {
+                equivalente = 0;
+            }
+        }
+
+        if (!equivalente) {
+            break;
+        }
+        */
         next_permutation(ids.begin(), ids.end());
     }
-    */
+    
     return equivalente;
 }
