@@ -1,4 +1,9 @@
+#ifndef __operacao__
+#define __operacao__
+
 #include "grafo.h"
+#include <map>
+
 using namespace std;
 
 typedef struct {
@@ -17,10 +22,12 @@ typedef struct {
 
 typedef vector<operacao> operacoes;
 
-operacoes readOps(int *v);
+typedef map<pair<pair<int,int>,char>,pair<int,int>> escritas;
 
-int testaSeriabilidade(operacoes inputs, int ver);
+typedef map<char, int> ultima_escrita;
 
-vector<escalonamento> separaInput(operacoes in, int tam);
+operacoes leEntrada(int *v);
 
-int testaEquivalencia(operacoes inputs);
+vector<escalonamento> separaEntradas(operacoes entradas);
+
+#endif

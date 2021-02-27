@@ -1,10 +1,7 @@
-#include <cstdio>
-#include <cstdio>
 #include "grafo.h"
 using namespace std;
 
 // Implementação com base em: https://www.ime.usp.br/~pf/algoritmos_para_grafos/aulas/graphdatastructs.html
-
 
 Grafo iniciaGrafo(int V) { 
 	Grafo grafo_p = new grafo;
@@ -16,12 +13,12 @@ Grafo iniciaGrafo(int V) {
 	return grafo_p;
 }
 
-void insereAresta(Grafo grafo_p, int origem, int destino) {
-	grafo_p->matrix[origem][destino] = 1;
+void insereAresta(Grafo grafo_p, int i, int j) {
+	grafo_p->matrix[i][j] = 1;
 }
 
-void removeAresta(Grafo grafo_p, int origem, int destino) {
-	grafo_p->matrix[origem][destino] = 0;
+void removeAresta(Grafo grafo_p, int i, int j) {
+	grafo_p->matrix[i][j] = 0;
 }
 
 void imprimeGrafo(Grafo grafo_p) {
@@ -34,7 +31,6 @@ void imprimeGrafo(Grafo grafo_p) {
 	}
 }
 
-/* utilidade para a função de detecção de ciclo */
 bool checkCiclo_aux(Grafo grafo_p, vector<bool> acessados, int atual) {
 	if (acessados[atual])
 		return true;
@@ -53,8 +49,8 @@ bool checkCiclo_aux(Grafo grafo_p, vector<bool> acessados, int atual) {
 	acessados[atual] = false;
 	return false;
 }
-/* detecta ciclo no grafo */
-int checkCiclo(Grafo grafo_p) {
+
+bool checkCiclo(Grafo grafo_p) {
 	vector<bool> acessados(grafo_p->V, 0);
 	bool flag = false;
 

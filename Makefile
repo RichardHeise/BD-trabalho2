@@ -4,7 +4,7 @@ CC = g++
 #------------------------------------------------------------------------------
 all : escalona 
 
-escalona : escalona.o grafo.o operacao.o 
+escalona : escalona.o grafo.o operacao.o main.o
 
 #------------------------------------------------------------------------------
 
