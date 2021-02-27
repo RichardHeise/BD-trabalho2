@@ -2,12 +2,12 @@
 
 Trabalho para banco de dados feito em 2021 via ERE.
 
-link do trabalho: https://www.inf.ufpr.br/eduardo/ensino/ci218/trabalhos/escalona/escalona.html
+Link do trabalho: https://www.inf.ufpr.br/eduardo/ensino/ci218/trabalhos/escalona/escalona.html
 
-Instrução:
+## Instrução:
 
-Objetivo:
-Implementar dois algoritmos de detecção de conflitos de escalonamento de transações concorrentes. Estes algoritmos permitem o aluno compreender gargalos no processamento de transações.
+### Objetivo:
+- Implementar dois algoritmos de detecção de conflitos de escalonamento de transações concorrentes. Estes algoritmos permitem o aluno compreender gargalos no processamento de transações.
 
 ## Algoritmo de teste de seriabilidade quanto ao conflito:
 - Crie um nó para cada T do escalonamento S
