@@ -1,3 +1,10 @@
+# @file  Makefile
+# @brief Arquivo Make
+# @date 27/02/2021
+# @author Richard Fernando Heise Ferreira (GRR20191053)
+# @author Mônica Ludmila Hintz de Oliveira (GRR20159417)
+
+
 CFLAGS  = -Wall 
 CC = g++
 

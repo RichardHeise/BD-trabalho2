@@ -1,25 +1,40 @@
+/**
+ * @file  grafo.cpp
+ * @brief Arquivo com as implementações de grafos
+ * @date 27/02/2021
+ * @author Richard Fernando Heise Ferreira (GRR20191053)
+ * @author Mônica Ludmila Hintz de Oliveira (GRR20159417)
+ **/
+
 #include "grafo.h"
 using namespace std;
 
 // Implementação com base em: https://www.ime.usp.br/~pf/algoritmos_para_grafos/aulas/graphdatastructs.html
 
+/* =============================================================================================== */
+
 Grafo iniciaGrafo(int V) { 
 	Grafo grafo_p = new grafo;
 	grafo_p->V = V;
-	grafo_p->A = 0;
 	vector<int> linha(V, 0);
 	for (int i = 0; i < V; ++i)
 		grafo_p->matrix.push_back(linha);
 	return grafo_p;
 }
 
+/* =============================================================================================== */
+
 void insereAresta(Grafo grafo_p, int i, int j) {
 	grafo_p->matrix[i][j] = 1;
 }
 
+/* =============================================================================================== */
+
 void removeAresta(Grafo grafo_p, int i, int j) {
 	grafo_p->matrix[i][j] = 0;
 }
+
+/* =============================================================================================== */
 
 void imprimeGrafo(Grafo grafo_p) {
 	for (int i = 0; i < grafo_p->V; ++i) {
@@ -30,6 +45,8 @@ void imprimeGrafo(Grafo grafo_p) {
 		cout << endl;
 	}
 }
+
+/* =============================================================================================== */
 
 bool checkCiclo_aux(Grafo grafo_p, vector<bool> acessados, int atual) {
 	if (acessados[atual])
@@ -50,6 +67,8 @@ bool checkCiclo_aux(Grafo grafo_p, vector<bool> acessados, int atual) {
 	return false;
 }
 
+/* =============================================================================================== */
+
 bool checkCiclo(Grafo grafo_p) {
 	vector<bool> acessados(grafo_p->V, 0);
 	bool flag = false;
@@ -67,3 +86,5 @@ bool checkCiclo(Grafo grafo_p) {
 	}
 	return false;
 }
+
+/* =============================================================================================== */
