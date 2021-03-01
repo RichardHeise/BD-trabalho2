@@ -3,7 +3,7 @@
  * @brief Arquivo principal com a solução do software.
  * @date 27/02/2021
  * @author Richard Fernando Heise Ferreira (GRR20191053)
- * @author Mônica Ludmila Hintz de Oliveira (GRR20159417)
+ * @author Monica Ludmila Hintz de Oliveira (GRR20159417)
  **/
 
 #include "escalona.h"
